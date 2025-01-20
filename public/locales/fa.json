@@ -2,5 +2,9 @@
     "welcome": "به TaskBloom خوش آمدید",
     "settings": "تنظیمات",
     "save": "ذخیره",
-    "selectLanguage": "زبان را انتخاب کنید"
+    "selectLanguage": "زبان را انتخاب کنید",
+    "selectTheme": "انتخاب تم",
+    "auto": "خودکار",
+    "light": "روشن",
+    "dark": "تاریک"  
 }

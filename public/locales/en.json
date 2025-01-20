@@ -2,5 +2,9 @@
     "welcome": "Welcome to TaskBloom",
     "settings": "Settings",
     "save": "Save",
-    "selectLanguage": "Select Language"
+    "selectLanguage": "Select Language",
+    "selectTheme": "Select Theme",
+    "auto": "Auto",
+    "light": "Light",
+    "dark": "Dark"
 }
