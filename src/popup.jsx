@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import LanguageSelector from './components/LanguageSelector';
 import useTranslations from './hooks/useTranslations';
-import './assets/index.css'
+import './assets/index.css';
 
 const Popup = () => {
   const { language, translations } = useTranslations();
@@ -11,7 +11,16 @@ const Popup = () => {
   const handleLanguageChange = (newLanguage) => {
     chrome.storage.sync.set({ language: newLanguage }, () => {
       alert(translations.save || 'Settings saved!');
-      chrome.runtime.sendMessage({ type: 'LANGUAGE_CHANGED', language: newLanguage });
+      // Optional: Send a message to the background script
+      if (chrome.runtime?.sendMessage) {
+        chrome.runtime.sendMessage({ type: 'LANGUAGE_CHANGED', language: newLanguage }, (response) => {
+          if (chrome.runtime.lastError) {
+            console.error('Error sending message:', chrome.runtime.lastError);
+          } else {
+            console.log('Message sent successfully:', response);
+          }
+        });
+      }
     });
   };
 
