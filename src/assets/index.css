@@ -5,13 +5,35 @@
  * Licensed under the GNU General Public License v3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'Roboto';
+    src: url('/public/fonts/Roboto/Roboto.ttf') format('truetype');
+    font-weight: 400 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('/public/fonts/Vazirmatn/Vazirmatn.ttf') format('truetype');
+    font-weight: 400 700;
+    font-style: normal;
+}
+
+/* Default font for all languages */
 body {
-    font-family: 'Vazirmatn', 'Roboto', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    @apply font-roboto;
+}
+
+/* Specific font for Persian (Farsi) content */
+body:lang(fa) {
+    @apply font-vazirmatn;
+}
+
+/* Specific font for English content */
+body:lang(en) {
+    @apply font-roboto;
 }
