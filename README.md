@@ -1,6 +1,11 @@
 # Task Bloom :t-rex:
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+![GitHub Release](https://img.shields.io/github/v/release/masihgh/task-bloom-chrome-extension?include_prereleases)
+![Vite](https://img.shields.io/badge/Vite-4.0.0-orange.svg)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.17-blueviolet.svg)
+![daisyUI](https://img.shields.io/badge/daisyUI-4.12.23-ff69b4.svg)
+![PostCSS](https://img.shields.io/badge/PostCSS-8.5.1-blue.svg)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/masihgh/task-bloom-chorome-extention)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/masihgh/task-bloom-chorome-extention/pulls)
 [![GitHub Stars](https://img.shields.io/github/stars/masihgh/task-bloom-chorome-extention?style=social)](https://github.com/masihgh/task-bloom-chorome-extention/stargazers)
@@ -90,6 +95,13 @@ We believe in the power of collaboration and transparency. By making **TaskBloom
 - Thanks to all contributors who help make TaskBloom better.
 
 - Inspired by the need for a simple, open-source Chrome homepage.
+
+### References
+
+- **Trex Icon**: From [Microsoft Fluent Icons](https://github.com/microsoft/fluentui-system-icons).
+- **Fonts**: [Vazirmatn](https://github.com/rastikerdar/vazirmatn) and [Roboto](https://fonts.google.com/specimen/Roboto) from Google Fonts.
+- **Styled Components**: Built with [daisyUI](https://daisyui.com/), a Tailwind CSS component library.
+
 
 ## :t-rex: Why TaskBloom?
 
