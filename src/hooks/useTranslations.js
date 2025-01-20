@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 const useTranslations = () => {
-  const [language, setLanguage] = useState('en');
-  const [translations, setTranslations] = useState({});
+  const [language, setLanguage] = useState('en'); // Default language is 'en'
+  const [translations, setTranslations] = useState({}); // Default to an empty object
 
   // Load translations for the selected language
   const loadTranslations = async (lang) => {
@@ -15,7 +15,18 @@ const useTranslations = () => {
       setTranslations(data);
     } catch (error) {
       console.error('Error loading translations:', error);
+      setTranslations({}); // Fallback to an empty object
     }
+  };
+
+  // Set the language and direction attributes of the <html> and <body> elements
+  const setLanguageAndDirection = (lang) => {
+    // Set the language attribute of the <html> element
+    document.documentElement.lang = lang;
+
+    // Set the direction attribute of the <body> element
+    const isRTL = lang === 'fa' || lang === 'ar'; // Add other RTL languages if needed
+    document.body.dir = isRTL ? 'rtl' : 'ltr';
   };
 
   // Load saved language setting and translations
@@ -24,40 +35,23 @@ const useTranslations = () => {
       const result = await chrome.storage.sync.get(['language']);
       const lang = result.language || 'en';
       setLanguage(lang);
+      setLanguageAndDirection(lang);
       await loadTranslations(lang);
     };
 
     fetchInitialLanguage();
-
-    // Listen for language changes from the popup
-    const handleMessage = (message) => {
-      if (message.type === 'LANGUAGE_CHANGED') {
-        setLanguage(message.language);
-        loadTranslations(message.language);
-      }
-    };
-
-    chrome.runtime.onMessage.addListener(handleMessage);
-
-    // Cleanup the message listener when the component unmounts
-    return () => {
-      chrome.runtime.onMessage.removeListener(handleMessage);
-    };
   }, []);
 
-  // Update the <html> lang and dir attributes when the language changes
-  useEffect(() => {
-    document.documentElement.lang = language;
+  // Save language to storage
+  const saveLanguage = (newLanguage) => {
+    chrome.storage.sync.set({ language: newLanguage }, () => {
+      setLanguage(newLanguage);
+      setLanguageAndDirection(newLanguage);
+      loadTranslations(newLanguage);
+    });
+  };
 
-    // Set dir="rtl" for Arabic (ar) and Persian (fa)
-    if (language === 'ar' || language === 'fa') {
-      document.documentElement.dir = 'rtl';
-    } else {
-      document.documentElement.dir = 'ltr'; // Default to left-to-right for other languages
-    }
-  }, [language]);
-
-  return { language, translations };
+  return { language, setLanguage: saveLanguage, translations };
 };
 
 export default useTranslations;

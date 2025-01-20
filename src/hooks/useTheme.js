@@ -31,40 +31,25 @@ const useTheme = () => {
     };
 
     fetchInitialSettings();
-
-    // Listen for theme changes from the popup
-    const handleMessage = (message) => {
-      if (message.type === 'THEME_CHANGED') {
-        setTheme(message.theme);
-        applyTheme(message.theme);
-      } else if (message.type === 'COLOR_CHANGED') {
-        setPrimaryColor(message.color);
-        applyColor(message.color);
-      }
-    };
-
-    chrome.runtime.onMessage.addListener(handleMessage);
-
-    // Cleanup the message listener when the component unmounts
-    return () => {
-      chrome.runtime.onMessage.removeListener(handleMessage);
-    };
   }, []);
 
-  // Watch for system theme changes in auto mode
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleSystemThemeChange = () => {
-      if (theme === 'auto') {
-        applyTheme('auto');
-      }
-    };
+  // Save theme to storage
+  const saveTheme = (newTheme) => {
+    chrome.storage.sync.set({ theme: newTheme }, () => {
+      setTheme(newTheme);
+      applyTheme(newTheme);
+    });
+  };
 
-    mediaQuery.addEventListener('change', handleSystemThemeChange);
-    return () => mediaQuery.removeEventListener('change', handleSystemThemeChange);
-  }, [theme]);
+  // Save primary color to storage
+  const savePrimaryColor = (color) => {
+    chrome.storage.sync.set({ primaryColor: color }, () => {
+      setPrimaryColor(color);
+      applyColor(color);
+    });
+  };
 
-  return { theme, setTheme, primaryColor, setPrimaryColor };
+  return { theme, setTheme: saveTheme, primaryColor, setPrimaryColor: savePrimaryColor };
 };
 
 export default useTheme;

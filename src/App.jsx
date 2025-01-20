@@ -8,7 +8,7 @@ const App = () => {
   const { theme, primaryColor } = useTheme();
 
   return (
-    <div className="App" data-theme={theme}>
+    <div className="App" data-theme={theme} lang={translations.language || 'en'}>
       <HomePage translations={translations} theme={theme} primaryColor={primaryColor} />
     </div>
   );

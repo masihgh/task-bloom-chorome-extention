@@ -1,12 +1,12 @@
 {
     "welcome": "Welcome to TaskBloom",
-    "settings": "Settings",
-    "save": "Save",
     "selectLanguage": "Select Language",
     "selectTheme": "Select Theme",
     "auto": "Auto",
     "light": "Light",
     "dark": "Dark",
-    "primaryColor": "Primary Color"
-  
+    "save": "Settings saved!",
+    "settings": "Settings",
+    "primaryColor": "Primary Color",
+    "saveSettings": "Save Settings"
 }
