@@ -1,29 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import LanguageSelector from './components/LanguageSelector';
 import ThemeSelector from './components/ThemeSelector';
+import ColorPicker from './components/ColorPicker';
+import LanguageSelector from './components/LanguageSelector';
+import useTheme from './hooks/useTheme';
 import useTranslations from './hooks/useTranslations';
-import useTheme from './hooks/useTheme'; 
-import './assets/index.css';
+import './assets/index.css'
 
 const Popup = () => {
+  const { theme, setTheme, primaryColor, setPrimaryColor } = useTheme();
   const { language, translations } = useTranslations();
-  const { theme, setTheme } = useTheme(); // Use the theme hook
-
-  // Save language setting
-  const handleLanguageChange = (newLanguage) => {
-    chrome.storage.sync.set({ language: newLanguage }, () => {
-      alert(translations.save || 'Settings saved!');
-      chrome.runtime.sendMessage({ type: 'LANGUAGE_CHANGED', language: newLanguage });
-    });
-  };
 
   // Save theme setting
   const handleThemeChange = (newTheme) => {
     chrome.storage.sync.set({ theme: newTheme }, () => {
-      alert(translations.save || 'Settings saved!');
       chrome.runtime.sendMessage({ type: 'THEME_CHANGED', theme: newTheme });
       setTheme(newTheme);
+    });
+  };
+
+  // Save color setting
+  const handleColorChange = (color) => {
+    chrome.storage.sync.set({ primaryColor: color }, () => {
+      chrome.runtime.sendMessage({ type: 'COLOR_CHANGED', color });
+      setPrimaryColor(color);
+    });
+  };
+
+  // Save language setting
+  const handleLanguageChange = (newLanguage) => {
+    chrome.storage.sync.set({ language: newLanguage }, () => {
+      chrome.runtime.sendMessage({ type: 'LANGUAGE_CHANGED', language: newLanguage });
     });
   };
 
@@ -38,6 +45,11 @@ const Popup = () => {
       <ThemeSelector
         theme={theme}
         onThemeChange={handleThemeChange}
+        translations={translations}
+      />
+      <ColorPicker
+        primaryColor={primaryColor}
+        onColorChange={handleColorChange}
         translations={translations}
       />
     </div>

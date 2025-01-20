@@ -1,10 +1,11 @@
 {
     "welcome": "به TaskBloom خوش آمدید",
-    "settings": "تنظیمات",
-    "save": "ذخیره",
-    "selectLanguage": "زبان را انتخاب کنید",
+    "selectLanguage": "انتخاب زبان",
     "selectTheme": "انتخاب تم",
     "auto": "خودکار",
     "light": "روشن",
-    "dark": "تاریک"  
-}
+    "dark": "تاریک",
+    "save": "تنظیمات ذخیره شد!",
+    "settings": "تنظیمات",
+    "primaryColor": "رنگ اصلی"
+  }

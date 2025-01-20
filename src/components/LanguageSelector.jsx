@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LanguageSelector = ({ language, onLanguageChange, translations }) => {
+const LanguageSelector = ({ language, onLanguageChange, translations = {} }) => {
   const languages = [
     { code: 'en', name: 'English' },
     { code: 'fa', name: 'فارسی' },

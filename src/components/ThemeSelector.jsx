@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ThemeSelector = ({ theme, onThemeChange, translations }) => {
+const ThemeSelector = ({ theme, onThemeChange, translations = {} }) => {
   const themes = [
     { code: 'auto', name: translations.auto || 'Auto' },
     { code: 'light', name: translations.light || 'Light' },

@@ -6,5 +6,7 @@
     "selectTheme": "Select Theme",
     "auto": "Auto",
     "light": "Light",
-    "dark": "Dark"
+    "dark": "Dark",
+    "primaryColor": "Primary Color"
+  
 }

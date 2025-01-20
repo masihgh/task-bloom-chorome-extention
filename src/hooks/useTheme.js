@@ -2,33 +2,44 @@ import { useEffect, useState } from 'react';
 
 const useTheme = () => {
   const [theme, setTheme] = useState('auto'); // Default theme is 'auto'
+  const [primaryColor, setPrimaryColor] = useState('#3b82f6'); // Default primary color
 
   // Apply the theme to the <html> element
   const applyTheme = (theme) => {
     let resolvedTheme = theme;
     if (theme === 'auto') {
-      // Use browser's preference for auto mode
       resolvedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
     document.documentElement.setAttribute('data-theme', resolvedTheme);
   };
 
-  // Load saved theme setting
+  // Apply the primary color to the <html> element
+  const applyColor = (color) => {
+    document.documentElement.style.setProperty('--primary-color', color);
+  };
+
+  // Load saved theme and color settings
   useEffect(() => {
-    const fetchInitialTheme = async () => {
-      const result = await chrome.storage.sync.get(['theme']);
+    const fetchInitialSettings = async () => {
+      const result = await chrome.storage.sync.get(['theme', 'primaryColor']);
       const savedTheme = result.theme || 'auto';
+      const savedColor = result.primaryColor || '#3b82f6';
       setTheme(savedTheme);
-      applyTheme(savedTheme); // Apply the saved theme
+      setPrimaryColor(savedColor);
+      applyTheme(savedTheme);
+      applyColor(savedColor);
     };
 
-    fetchInitialTheme();
+    fetchInitialSettings();
 
     // Listen for theme changes from the popup
     const handleMessage = (message) => {
       if (message.type === 'THEME_CHANGED') {
         setTheme(message.theme);
         applyTheme(message.theme);
+      } else if (message.type === 'COLOR_CHANGED') {
+        setPrimaryColor(message.color);
+        applyColor(message.color);
       }
     };
 
@@ -53,7 +64,7 @@ const useTheme = () => {
     return () => mediaQuery.removeEventListener('change', handleSystemThemeChange);
   }, [theme]);
 
-  return { theme, setTheme };
+  return { theme, setTheme, primaryColor, setPrimaryColor };
 };
 
 export default useTheme;

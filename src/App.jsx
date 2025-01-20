@@ -5,11 +5,11 @@ import useTheme from './hooks/useTheme';
 
 const App = () => {
   const { translations } = useTranslations();
-  const { theme } = useTheme();
+  const { theme, primaryColor } = useTheme();
 
   return (
     <div className="App" data-theme={theme}>
-      <HomePage translations={translations} />
+      <HomePage translations={translations} theme={theme} primaryColor={primaryColor} />
     </div>
   );
 };
