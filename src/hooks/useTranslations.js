@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 const useTranslations = () => {
   const [language, setLanguage] = useState('en'); // Default language is 'en'
   const [translations, setTranslations] = useState({}); // Default to an empty object
+  const [isLoading, setIsLoading] = useState(true); // Loading state
 
   // Load translations for the selected language
   const loadTranslations = async (lang) => {
@@ -16,15 +17,14 @@ const useTranslations = () => {
     } catch (error) {
       console.error('Error loading translations:', error);
       setTranslations({}); // Fallback to an empty object
+    } finally {
+      setIsLoading(false); // Set loading to false
     }
   };
 
   // Set the language and direction attributes of the <html> and <body> elements
   const setLanguageAndDirection = (lang) => {
-    // Set the language attribute of the <html> element
     document.documentElement.lang = lang;
-
-    // Set the direction attribute of the <body> element
     const isRTL = lang === 'fa' || lang === 'ar'; // Add other RTL languages if needed
     document.body.dir = isRTL ? 'rtl' : 'ltr';
   };
@@ -51,7 +51,7 @@ const useTranslations = () => {
     });
   };
 
-  return { language, setLanguage: saveLanguage, translations };
+  return { language, setLanguage: saveLanguage, translations, isLoading };
 };
 
 export default useTranslations;

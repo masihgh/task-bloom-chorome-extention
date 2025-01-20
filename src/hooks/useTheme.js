@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 const useTheme = () => {
   const [theme, setTheme] = useState('auto'); // Default theme is 'auto'
   const [primaryColor, setPrimaryColor] = useState('#3b82f6'); // Default primary color
+  const [isLoading, setIsLoading] = useState(true); // Loading state
 
   // Apply the theme to the <html> element
   const applyTheme = (theme) => {
@@ -28,6 +29,7 @@ const useTheme = () => {
       setPrimaryColor(savedColor);
       applyTheme(savedTheme);
       applyColor(savedColor);
+      setIsLoading(false); // Set loading to false
     };
 
     fetchInitialSettings();
@@ -49,7 +51,7 @@ const useTheme = () => {
     });
   };
 
-  return { theme, setTheme: saveTheme, primaryColor, setPrimaryColor: savePrimaryColor };
+  return { theme, setTheme: saveTheme, primaryColor, setPrimaryColor: savePrimaryColor, isLoading };
 };
 
 export default useTheme;
