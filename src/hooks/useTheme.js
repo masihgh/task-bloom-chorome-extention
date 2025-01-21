@@ -7,9 +7,10 @@ function hexToOklch(hex) {
     throw new Error('Invalid hex color provided.');
   }
 
-  const oklchColor = oklch(color); // Convert to OKLCH color space | Fuck Color OKLCH!!
-  return oklchColor.l + ' ' + oklchColor.c + ' ' + oklchColor.h; // Returns an object { l, c, h }
+  const oklchColor = oklch(color); // Convert to OKLCH color space
+  return `${oklchColor.l} ${oklchColor.c} ${oklchColor.h}deg`; // Properly formatted for CSS
 }
+
 
 
 const useTheme = () => {
