@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { parseHex, oklch } from 'culori';
+import { parse as parseHex, oklch } from 'culori';
 
+// Converts HEX color to OKLCH format
 function hexToOklch(hex) {
   const color = parseHex(hex); // Parse hex to a color object
   if (!color) {
@@ -8,9 +9,31 @@ function hexToOklch(hex) {
   }
 
   const oklchColor = oklch(color); // Convert to OKLCH color space
-  return `${oklchColor.l} ${oklchColor.c} ${oklchColor.h}deg`; // Properly formatted for CSS
+  return {
+    l: oklchColor.l,
+    c: oklchColor.c,
+    h: oklchColor.h,
+  };
 }
 
+// Gets a contrasting OKLCH color
+function getContrastingColor(oklchColor) {
+  if (!oklchColor || typeof oklchColor.l !== 'number' || typeof oklchColor.c !== 'number' || typeof oklchColor.h !== 'number') {
+    throw new Error('Invalid OKLCH color provided.');
+  }
+
+  // Adjust the lightness (`l`) to ensure contrast
+  const contrastingLightness = oklchColor.l > 0.5 ? 0.2 : 0.8;
+
+  // Create the contrasting OKLCH color object
+  return {
+    l: contrastingLightness,
+    c: oklchColor.c,
+    h: oklchColor.h,
+  };
+}
+
+// Custom hook for managing theme and primary color
 const useTheme = () => {
   const [theme, setTheme] = useState('auto'); // Default theme is 'auto'
   const [primaryColor, setPrimaryColor] = useState('#3b82f6'); // Default primary color
@@ -25,25 +48,41 @@ const useTheme = () => {
     document.documentElement.setAttribute('data-theme', resolvedTheme);
   };
 
-  // Apply the primary color to the <html> element
+  // Apply the primary color and its contrast to the <html> element
   const applyColor = (color) => {
-    document.documentElement.style.setProperty('--primary-color', color);
-    document.documentElement.style.setProperty('--p', hexToOklch(color));
-    console.log(hexToOklch(color));
+    try {
+      const oklchColor = hexToOklch(color); // Convert HEX to OKLCH
+      const contrastingColor = getContrastingColor(oklchColor); // Get the contrasting OKLCH color
 
+      // Convert OKLCH to CSS-compatible format
+      const oklchCss = `${oklchColor.l.toFixed(3)} ${oklchColor.c.toFixed(3)} ${oklchColor.h.toFixed(1)}deg`;
+      const contrastingCss = `${contrastingColor.l.toFixed(3)} ${contrastingColor.c.toFixed(3)} ${contrastingColor.h.toFixed(1)}deg`;
+
+      // Apply colors to CSS variables
+      document.documentElement.style.setProperty('--primary-color', color);
+      document.documentElement.style.setProperty('--p', oklchCss);
+      document.documentElement.style.setProperty('--pc', contrastingCss);
+    } catch (error) {
+      console.error('Failed to apply color:', error.message);
+    }
   };
 
   // Load saved theme and color settings
   useEffect(() => {
     const fetchInitialSettings = async () => {
-      const result = await chrome.storage.sync.get(['theme', 'primaryColor']);
-      const savedTheme = result.theme || 'auto';
-      const savedColor = result.primaryColor || '#3b82f6';
-      setTheme(savedTheme);
-      setPrimaryColor(savedColor);
-      applyTheme(savedTheme);
-      applyColor(savedColor);
-      setIsLoading(false); // Set loading to false
+      try {
+        const result = await chrome.storage.sync.get(['theme', 'primaryColor']);
+        const savedTheme = result.theme || 'auto';
+        const savedColor = result.primaryColor || '#3b82f6';
+        setTheme(savedTheme);
+        setPrimaryColor(savedColor);
+        applyTheme(savedTheme);
+        applyColor(savedColor);
+      } catch (error) {
+        console.error('Error fetching initial settings:', error.message);
+      } finally {
+        setIsLoading(false); // Set loading to false
+      }
     };
 
     fetchInitialSettings();
