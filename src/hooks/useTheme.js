@@ -11,8 +11,6 @@ function hexToOklch(hex) {
   return `${oklchColor.l} ${oklchColor.c} ${oklchColor.h}deg`; // Properly formatted for CSS
 }
 
-
-
 const useTheme = () => {
   const [theme, setTheme] = useState('auto'); // Default theme is 'auto'
   const [primaryColor, setPrimaryColor] = useState('#3b82f6'); // Default primary color

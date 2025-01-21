@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import ThemeSelector from './components/ThemeSelector';
-import ColorPicker from './components/ColorPicker';
-import LanguageSelector from './components/LanguageSelector';
+import ThemeSelector from './components/SettingPopup/ThemeSelector';
+import ColorPicker from './components/SettingPopup/ColorPicker';
+import LanguageSelector from './components/SettingPopup/LanguageSelector';
 import useTheme from './hooks/useTheme';
 import useTranslations from './hooks/useTranslations';
 import './assets/index.css';
+import './assets/popup.css';
 
 const Popup = () => {
   const { theme, setTheme, primaryColor, setPrimaryColor } = useTheme();
@@ -51,7 +52,7 @@ const Popup = () => {
         {translations.saveSettings || 'Save Settings'}
       </button>
       {isSaved && (
-        <div className="text-green-500 text-center mt-2">
+        <div className="text-success text-center mt-2">
           {translations.save || 'Settings saved!'}
         </div>
       )}
