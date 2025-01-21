@@ -1,12 +1,17 @@
 {
-    "welcome": "به TaskBloom خوش آمدید",
-    "selectLanguage": "انتخاب زبان",
-    "selectTheme": "انتخاب تم",
-    "auto": "خودکار",
-    "light": "روشن",
-    "dark": "تاریک",
-    "save": "تنظیمات ذخیره شد!",
-    "settings": "تنظیمات",
-    "primaryColor": "رنگ اصلی",
-    "saveSettings": "ذخیره تنظیمات"
-  }
+  "title": "تسک بلوم",
+  "enterSearch": "میخوای یه چیزی وارد کنی؟",
+  "placeholder": "چی میخوای؟!",
+  "search": "پیدا کن",
+  "feelingLucky": "آرزوی حق بر شما",
+  "welcome": "به TaskBloom خوش آمدید",
+  "selectLanguage": "انتخاب زبان",
+  "selectTheme": "انتخاب تم",
+  "auto": "خودکار",
+  "light": "روشن",
+  "dark": "تاریک",
+  "save": "تنظیمات ذخیره شد!",
+  "settings": "تنظیمات",
+  "primaryColor": "رنگ اصلی",
+  "saveSettings": "ذخیره تنظیمات"
+}

@@ -1,4 +1,9 @@
 {
+    "title": "TaskBloom",
+    "enterSearch": "Please enter a search query.",
+    "placeholder": "Search...",
+    "search": "Search",
+    "feelingLucky": "I'm Feeling Lucky",
     "welcome": "Welcome to TaskBloom",
     "selectLanguage": "Select Language",
     "selectTheme": "Select Theme",
