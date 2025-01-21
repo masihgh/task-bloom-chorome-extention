@@ -1,4 +1,16 @@
 import { useEffect, useState } from 'react';
+import { parseHex, oklch } from 'culori';
+
+function hexToOklch(hex) {
+  const color = parseHex(hex); // Parse hex to a color object
+  if (!color) {
+    throw new Error('Invalid hex color provided.');
+  }
+
+  const oklchColor = oklch(color); // Convert to OKLCH color space | Fuck Color OKLCH!!
+  return oklchColor.l + ' ' + oklchColor.c + ' ' + oklchColor.h; // Returns an object { l, c, h }
+}
+
 
 const useTheme = () => {
   const [theme, setTheme] = useState('auto'); // Default theme is 'auto'
@@ -17,6 +29,9 @@ const useTheme = () => {
   // Apply the primary color to the <html> element
   const applyColor = (color) => {
     document.documentElement.style.setProperty('--primary-color', color);
+    document.documentElement.style.setProperty('--p', hexToOklch(color));
+    console.log(hexToOklch(color));
+
   };
 
   // Load saved theme and color settings
