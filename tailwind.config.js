@@ -17,8 +17,8 @@ module.exports = {
       light:{
         "base-content":"#121212",
         "base-100": "#ffffff",
-        "base-200": "#d1d1d1",
-        "base-300": "#bababa",
+        "base-300": "#d1d1d1",
+        "base-200": "#bababa",
         "success": "#b7d93d",
         "error": "#c90010",
         "info": "#0055fe",
